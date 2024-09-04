@@ -20,8 +20,9 @@ if transcript:
 
 
 # %%
-
 import json
 
 with open("data/external/transcript.json", "w") as f:
     json.dump(transcript, f)
+
+# %%

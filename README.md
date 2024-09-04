@@ -2,7 +2,12 @@
 
 1) ```conda create -n <name> python=3.12```
 2) ```conda activate <name>```
-3) ```pip install -r requirements.txt```
+3) ```conda env create -f environment.yaml```
+\* If conda is not available, use ```pip install -r requirements.txt```
+
+## Ingest transcripts
+
+## Chunking transcripts into logical sentences
 
 ## Project Organization
 
