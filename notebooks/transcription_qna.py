@@ -9,7 +9,7 @@ client = OpenAI()
 load_dotenv()
 
 # Set the OpenAI API key environment variable
-os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
+# os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
 
 # %%
@@ -52,19 +52,10 @@ def llm(prompt):
     return response.choices[0].message.content
 
 
-# %%
-prompt = build_prompt(test_transcripts[0]["text"])
-print(prompt)
-
-
-# %%
 def rag(context: str):
     prompt = build_prompt(context)
     answer = llm(prompt)
     return json.loads(answer)
-
-
-# %%
 
 
 def add_qa_to_transcripts(transcripts):
@@ -77,6 +68,10 @@ def add_qa_to_transcripts(transcripts):
     return new_transcripts
 
 
+# %%
+test_transcript = test_transcripts[0]["text"]
+
+test_rag = rag(test_transcript)
 # %%
 transcripts_with_qa = add_qa_to_transcripts(transcripts)
 for t in transcripts_with_qa:

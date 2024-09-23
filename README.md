@@ -73,3 +73,10 @@
         └── routes.py           <- API route definitions
 
 ```
+
+## NaN values
+
+If NaN values are present in your dataset, please try the following:
+
+- find missing values and replace them with appropriate values (e.g. "answer" as "NA" with valid answer)
+- you can also just fill na with empty string like this: `df = df.fillna("")`, but it's not recommended.

@@ -1,0 +1,60 @@
+Modify @build_prompt function to be more flexible in case I want to use more entries for the context. Like here, for example:
+```
+prompt_template = """
+You're a fitness insrtuctor. Answer the QUESTION based on the CONTEXT from our exercises database.
+Use only the facts from the CONTEXT when answering the QUESTION.
+
+QUESTION: {question}
+
+CONTEXT:
+{context}
+""".strip()
+
+entry_template = """
+exercise_name: {exercise_name}
+type_of_activity: {type_of_activity}
+type_of_equipment: {type_of_equipment}
+body_part: {body_part}
+type: {type}
+muscle_groups_activated: {muscle_groups_activated}
+instructions: {instructions}
+""".strip()
+
+def build_prompt(query, search_results):
+    context = ""
+    
+    for doc in search_results:
+        context = context + entry_template.format(**doc) + "\n\n"
+
+    prompt = prompt_template.format(question=query, context=context).strip()
+    return prompt
+```
+Remember, this is only example. Stick to the convention of my file.
+
+----------------
+
+    default_template = """
+    Generate a question and answer based on the following context:
+    {context}
+    Respond with a JSON object containing "question" and "answer" keys.
+    If there's not enough information, use "NA" as the answer.
+    """.strip()
+
+-----------------
+    prompt_template = """
+    You're a professional podcast assistant. You will generate QUESTION and ANSWER based on the CONTEXT from text-chunks of the transcript.
+    Here you will generate a QUESTION for which the CONTEXT is relevant.
+    The output should be valid JSON, with keys enclosed in double quotes and properly escaped characters.
+    Respond only with a valid JSON object containing the keys "question" and "answer".
+    Do not include any markup formatting or code block syntax.
+    Avoid to including word "context" in the question or answer.
+    Pattern:
+    {{"question": QUESTION, "answer": ANSWER}}
+    If the text does not contain sufficient information to answer the question, do not make up information and give the answer as "NA".
+    You are only allowed to answer questions related to CONTEXT.
+    Use only the facts from the CONTEXT when answering the QUESTION.
+    Remember that the text chunks derive from podcast where podcaster talks with the guest, so if you see diversity of roles in the CONTEXT, try to recognize that.
+    Focus.
+    CONTEXT: 
+    {context}
+    """.strip()
